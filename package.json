@@ -1,4 +1,31 @@
 {
-  "name": "md-links",
-  "version": "0.1.0"
+  "name": "merly-anco-md-links",
+  "version": "0.1.0",
+  "description": "libreria que permite analizar el correcto funcionamiento de los archivos markdown",
+  "main": "index.js",
+  "type": "module",
+  "keywords": [
+    "markdown",
+    "md-link"
+  ],
+  "author": "Merly Anco",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint",
+    "build": "babel src -d dist",
+    "start": "npm run build && node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MerlyAnco/LIM016-md-links.git"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.8",
+    "@babel/core": "^7.16.7",
+    "@babel/preset-env": "^7.16.8",
+    "eslint": "^8.6.0",
+    "jest": "^27.4.7",
+    "nodemon": "^2.0.15"
+  }
 }

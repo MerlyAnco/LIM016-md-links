@@ -1,0 +1,16 @@
+{
+    "presets": [
+      ["@babel/env", {
+        "targets": {
+          "node": "current"
+        }
+      }]
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-object-rest-spread"
+    ]
+  }
+
+//La configuración anterior es lo que uso para decirle a Babel que sí, quiero usar no solo mis declaraciones de importación y exportación, 
+//sino también la función de clase, así como el resto y los operadores de propagación de ES6.
