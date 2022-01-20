@@ -11,32 +11,32 @@ import {
 } from './funciones.js'
 
 
-export const arrayLinks = (ruta) => new Promise((resolve, reject) =>{
+export const arrayLinks = (ruta) => new Promise((resolve) =>{
     const newPath = absolutePath(ruta);
     const arrFiles = readDirectory(newPath);
     const arrTypeMd = arrFilesMd(arrFiles);
     const readFilesMd = readArrFile(arrTypeMd);
     const htmlFiles = arrFileHtml(readFilesMd);
-    const links = getLinks(htmlFiles,newPath);
+    const links = getLinks(htmlFiles);
   resolve(links)
 })
 
-const mdLinks = (path, option) => {
-    console.log(option)
+export const mdLinks = (path, option) => new Promise((resolve) => {
     if(pathValido(path)){
         if (option === undefined || option.validate === false) {
-            console.log(arrayLinks(path))
-            return arrayLinks(path)
+            const arrLinks = arrayLinks(path)
+            resolve(arrLinks)
+            // return arrayLinks(path).then(results => resolve(results))
         } else if(option.validate === true){
             arrayLinks(path).then(links => {
-                linksStatus(links)
-            })
+                resolve(linksStatus(links))
+                })
         } 
     } else {
         return 'La ruta ingresada no existe o no es valida'
     }
-    
-}
-mdLinks('prueba/links.md',{validate:true})
+})
+
+export default mdLinks
 
 

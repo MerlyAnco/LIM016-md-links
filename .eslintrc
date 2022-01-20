@@ -1,8 +1,10 @@
 {
   "env": {
     "node": true,
-    "es6": true
+    "es6": true,
+    "jest/globals": true
   },
+  "plugins": ["jest"],
   "parserOptions": {
     "ecmaVersion": 8,
     "sourceType": "module"
@@ -11,4 +13,5 @@
   "rules": {
     "no-console": "warn"
   }
+
 }

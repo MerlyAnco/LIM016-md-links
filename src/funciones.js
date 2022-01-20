@@ -5,10 +5,18 @@ import jsdom from 'jsdom';
 const { JSDOM } = jsdom;
 import fetch from 'node-fetch';
 
+import figlet from 'figlet'
+import chalk from 'chalk';
+
+const title = () => {
+    return console.log(chalk.magenta(figlet.textSync('MD-Links')));
+}
+
 // validar si la ruta existe
 const pathValido = (ruta) =>{
-    const isValido = fs.existsSync(ruta)
+    const isValido = fs.existsSync(ruta) ? true:console.log(chalk.red.bold(`The path:'${ruta}', doesn't exist`))
     return isValido
+    
 } 
 // convertir la ruta a absoluta en caso de ser relativa
 const absolutePath = (ruta) => {
@@ -62,8 +70,10 @@ const arrFilesMd = (arr) => {
 // leer archivos md
 const readArrFile = (arrFile) => {
     const arrFileContent = []
-    arrFile.forEach((content) =>{    
-        arrFileContent.push(fs.readFileSync(content,'utf8'))
+    arrFile.forEach((pathAbs) =>{    
+        arrFileContent.push({
+            path:pathAbs,
+            content:fs.readFileSync(pathAbs,'utf8')})
     })
     return arrFileContent
 }
@@ -76,23 +86,25 @@ const arrFileHtml = (arrFileContent) => {
     const arrFileConvert = [];
 
     arrFileContent.forEach((fileRead)=>{
-        let fileHtml =  marked.parse(fileRead)
+        let fileHtml =  marked.parse(fileRead.content)
         let dom = new JSDOM(fileHtml)
-        arrFileConvert.push(dom)
+        arrFileConvert.push({
+            path:fileRead.path,
+            dom:dom})
     })
 
     return arrFileConvert
 }
 
-const getLinks = (arrfileHtml, ruta) =>{
+const getLinks = (arrfileHtml) =>{
     const links = []; 
     arrfileHtml.forEach((fileHtml)=>{
-    let arrTagA = fileHtml.window.document.querySelectorAll('a')
+    let arrTagA = (fileHtml.dom).window.document.querySelectorAll('a')
     arrTagA.forEach((a) => {
         links.push({
             href: a.href,
-            text: a.textContent,
-            file: ruta
+            text: a.textContent.slice(0,50),
+            file: fileHtml.path
         })
     })
     })
@@ -101,23 +113,24 @@ const getLinks = (arrfileHtml, ruta) =>{
 
 // conseguir status de los links
 const linksStatus = (arrayLinks) => {
-    const arrNew = []
-    arrayLinks.forEach((contentLinks) => {
-        console.log(contentLinks.href)
-        fetch(contentLinks.href).then((response) => {
-            if(response.status===200){
-                console.log(Object.assign(contentLinks, {status:response.status , ok: 'ok'}))
-                return Object.assign(contentLinks, {status:response.status , ok: 'ok'});
-            } else if (response.status===404){
-                console.log(Object.assign(contentLinks, {status:response.status , ok: 'fail'}))
-                return Object.assign(contentLinks, {status:response.status , ok: 'fail'});
+    const arrNew = arrayLinks.map((contentLinks) => {
+        const newArrFetch = fetch(contentLinks.href).then((response) => {
+            if(response.status>=200 && response.status<400){
+                // console.log(Object.assign(contentLinks, {status:response.status , ok: 'ok'}))
+                return Object.assign(contentLinks, {status:response.status , message: 'ok'}) 
+            } else if (response.status>=400 && response.status<500){
+                // console.log(Object.assign(contentLinks, {status:response.status , ok: 'fail'}))
+                return Object.assign(contentLinks, {status:response.status , message: 'fail'})
             }
+        }).catch(() => {
+            return Object.assign(contentLinks, {status:`Don't answer` , message: 'fail'})
         })
-    })
-    return arrNew
+        return newArrFetch
+        })
+    return Promise.all(arrNew)
 }
 
-// console.log(linksStatus( [
+// linksStatus( [
 //   {
 //     href: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Promise',
 //     text: 'Promesas',
@@ -128,8 +141,11 @@ const linksStatus = (arrayLinks) => {
 //     text: 'Path',
 //     file: 'C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\prueba\\links.md'
 //   }
-// ]))
-// console.log(getLinks(ruta1));
+// ])
+// .then((response)=>{
+//     console.log(response)
+// })
+
 
 export{
     absolutePath,
@@ -140,5 +156,6 @@ export{
     arrFileHtml,
     getLinks,
     pathValido,
-    linksStatus
+    linksStatus,
+    title
 }
