@@ -13,10 +13,10 @@
   "author": "Merly Anco",
   "license": "MIT",
   "scripts": {
-    "test": "jest",
     "lint": "eslint",
     "build": "babel src -d dist",
-    "start": "npm run build && node dist/index.js"
+    "start": "npm run build && node dist/index.js",
+    "test": "node --experimental-vm-modules  node_modules/jest/bin/jest.js --env=node --coverage"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "@babel/cli": "^7.16.8",
     "@babel/core": "^7.16.7",
     "@babel/preset-env": "^7.16.8",
+    "babel-jest": "^27.4.6",
     "eslint": "^8.6.0",
     "jest": "^27.4.7",
     "nodemon": "^2.0.15"
@@ -33,6 +34,8 @@
   "dependencies": {
     "chalk": "^5.0.0",
     "eslint-plugin-jest": "^25.7.0",
+    "fetch-mock": "^9.11.0",
+    "fetch-mock-jest": "^1.5.1",
     "figlet": "^1.5.2",
     "inquirer": "^8.2.0",
     "jsdom": "^19.0.0",

@@ -1,0 +1,68 @@
+import {
+  arrayLinks,
+  mdLinks
+} from '../src/md-links.js'
+
+const prueba = [{"file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\carpeta-prueba2\\link2.md", "href": "https://developer.mozilla.org/es/docs/Web/HTTP/Overview", "text": "Generalidades del protocolo HTTP - MDN"}, {"file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md", "href": "https://developer.mozilla.org/", "text": "Promesas"}, {"file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md", "href": "https://nodejs.org/api/pfdghath.html", "text": "Path"}, {"file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md", "href": "https://mediumd.com/netscape", "text": "Linea de comando CLI"}, {"file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md", "href": "https://carlosazvbnmaustre.es/", "text": "Asíncronía en js"}]
+
+const validateTrue =  [
+  {
+    "file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\carpeta-prueba2\\link2.md",
+    "href": "https://developer.mozilla.org/es/docs/Web/HTTP/Overview",
+    "message": "ok",
+    "status": 200,
+    "text": "Generalidades del protocolo HTTP - MDN",
+  },
+  {
+    "file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md",
+    "href": "https://developer.mozilla.org/",
+    "message": "ok",
+    "status": 200,
+    "text": "Promesas",
+  },
+  {
+    "file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md",
+    "href": "https://nodejs.org/api/pfdghath.html",
+    "message": "fail",
+    "status": 404,
+    "text": "Path",
+  },
+  {
+    "file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md",
+    "href": "https://mediumd.com/netscape",
+    "message": "ok",
+    "status": 200,
+    "text": "Linea de comando CLI",
+  },
+  {
+    "file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md",
+    "href": "https://carlosazvbnmaustre.es/",
+    "message": "fail",
+    "status": "Don't answer",
+    "text": "Asíncronía en js",
+  },
+]
+describe('arrayLinks', () => {
+  it('arrayLinks is a function', () => {
+    expect(typeof arrayLinks).toBe('function');
+  });
+  it('arrayLinks is ', () => {
+    expect(arrayLinks('test/prueba-test')).resolves.toStrictEqual(prueba);
+  });
+});
+
+describe('mdLinks', () => {
+  it('mdLinks is a function', () => {
+    expect(typeof mdLinks).toBe('function');
+  });
+  it('mdLinks is ', () => {
+    expect(mdLinks('test/prueba-test', {validate: false})).resolves.toStrictEqual(prueba);
+    expect(mdLinks('test/prueba-test')).resolves.toStrictEqual(prueba);
+  });
+  it('mdLinks is ', () => {
+    expect(mdLinks('test/prueba-test', {validate: true})).resolves.toStrictEqual(validateTrue);
+  });
+  it('mdLinks is ', () => {
+    expect(mdLinks('notPath', { validate: true })).resolves.toStrictEqual("La ruta ingresada no existe o no es valida");
+  });
+});

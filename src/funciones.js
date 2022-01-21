@@ -1,20 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 import { marked } from 'marked';
-import jsdom from 'jsdom';
-const { JSDOM } = jsdom;
+import { JSDOM }  from 'jsdom';
 import fetch from 'node-fetch';
 
-import figlet from 'figlet'
-import chalk from 'chalk';
-
-const title = () => {
-    return console.log(chalk.magenta(figlet.textSync('MD-Links')));
-}
 
 // validar si la ruta existe
 const pathValido = (ruta) =>{
-    const isValido = fs.existsSync(ruta) ? true:console.log(chalk.red.bold(`The path:'${ruta}', doesn't exist`))
+    const isValido = fs.existsSync(ruta) ? true:false
     return isValido
     
 } 
@@ -82,34 +75,38 @@ const readArrFile = (arrFile) => {
 
 // convertir archivos md a html 
 
-const arrFileHtml = (arrFileContent) => {
-    const arrFileConvert = [];
+const getLinks = (arrFileContent) => {
+    const links = []; 
 
     arrFileContent.forEach((fileRead)=>{
         let fileHtml =  marked.parse(fileRead.content)
         let dom = new JSDOM(fileHtml)
-        arrFileConvert.push({
-            path:fileRead.path,
-            dom:dom})
-    })
-
-    return arrFileConvert
-}
-
-const getLinks = (arrfileHtml) =>{
-    const links = []; 
-    arrfileHtml.forEach((fileHtml)=>{
-    let arrTagA = (fileHtml.dom).window.document.querySelectorAll('a')
-    arrTagA.forEach((a) => {
-        links.push({
-            href: a.href,
-            text: a.textContent.slice(0,50),
-            file: fileHtml.path
+        let arrTagA = (dom).window.document.querySelectorAll('a')
+        arrTagA.forEach((a) => {
+            links.push({
+                href: a.href,
+                text: a.textContent.slice(0,50),
+                file: fileRead.path
+            })
         })
-    })
     })
     return links
 }
+
+// const getLinks = (arrfileHtml) =>{
+//     const links = []; 
+//     arrfileHtml.forEach((fileHtml)=>{
+//     let arrTagA = (fileHtml.dom).window.document.querySelectorAll('a')
+//     arrTagA.forEach((a) => {
+//         links.push({
+//             href: a.href,
+//             text: a.textContent.slice(0,50),
+//             file: fileHtml.path
+//         })
+//     })
+//     })
+//     return links
+// }
 
 // conseguir status de los links
 const linksStatus = (arrayLinks) => {
@@ -153,9 +150,7 @@ export{
     readDirectory,
     arrFilesMd,
     readArrFile,
-    arrFileHtml,
     getLinks,
     pathValido,
-    linksStatus,
-    title
+    linksStatus
 }
