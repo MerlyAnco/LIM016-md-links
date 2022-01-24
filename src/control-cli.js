@@ -1,11 +1,9 @@
 #!/usr/bin/env node
 import inquirer from 'inquirer'
 
-import chalk from 'chalk';
-
 import mdLinks from './md-links.js'
 
-import {title, help} from './extra.js'
+import {title, help, tableValidate, basicTable} from './extra.js'
 
 import {cli} from './cli.js'
 
@@ -13,8 +11,6 @@ import {
     totalLinks,
     unique,
     broken} from './stats.js'
-
-
 
 // Grab provided args.
 const[,, ... arg] = process.argv
@@ -39,11 +35,11 @@ if(arg[0]==='' || arg[0]===undefined){
 }]).then(answer =>{
 
     if(answer.option==='Nothing'){
-        mdLinks(answer.path, {validate:false}).then((res)=>{console.log(res)})
+        mdLinks(answer.path, {validate:false}).then((res)=>{basicTable(res)})
     }
     if(answer.option==='--validate'){
         mdLinks(answer.path,{validate:true}).then((res)=>{
-            console.log(res)
+            tableValidate(res)
         }).catch(console.error)
     }
     if(answer.option==='--stats'){

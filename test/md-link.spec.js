@@ -3,43 +3,48 @@ import {
   mdLinks
 } from '../src/md-links.js'
 
-const prueba = [{"file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\carpeta-prueba2\\link2.md", "href": "https://developer.mozilla.org/es/docs/Web/HTTP/Overview", "text": "Generalidades del protocolo HTTP - MDN"}, {"file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md", "href": "https://developer.mozilla.org/", "text": "Promesas"}, {"file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md", "href": "https://nodejs.org/api/pfdghath.html", "text": "Path"}, {"file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md", "href": "https://mediumd.com/netscape", "text": "Linea de comando CLI"}, {"file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md", "href": "https://carlosazvbnmaustre.es/", "text": "Asíncronía en js"}]
+const prueba = [
+  {"file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\carpeta-prueba2\\link2.md", "href": "https://developer.mozilla.org/es/docs/Web/HTTP/Overview", "text": "Generalidades del protocolo HTTP - MDN".blue}, 
+  {"file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md", "href": "https://developer.mozilla.org/", "text": "Promesas".blue}, 
+  {"file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md", "href": "https://nodejs.org/api/pfdghath.html", "text": "Path".blue}, 
+  {"file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md", "href": "https://mediumd.com/netscape", "text": "Linea de comando CLI".blue}, 
+  {"file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md", "href": "https://carlosazvbnmaustre.es/", "text": "Asíncronía en js".blue}]
 
 const validateTrue =  [
   {
     "file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\carpeta-prueba2\\link2.md",
     "href": "https://developer.mozilla.org/es/docs/Web/HTTP/Overview",
-    "message": "ok",
+    "message": "OK".green,
     "status": 200,
-    "text": "Generalidades del protocolo HTTP - MDN",
+    "text": "Generalidades del protocolo HTTP - MDN".blue,
   },
   {
     "file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md",
     "href": "https://developer.mozilla.org/",
-    "message": "ok",
+    "message": "OK".greem,
     "status": 200,
-    "text": "Promesas",
+    "text": "Promesas".blue,
   },
   {
     "file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md",
     "href": "https://nodejs.org/api/pfdghath.html",
-    "message": "fail",
+    "message": "Fail".red,
     "status": 404,
-    "text": "Path",
+    "text": "Path".blue,
   },
   {
     "file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md",
     "href": "https://mediumd.com/netscape",
-    "message": "ok",
+    "message": "OK".green,
     "status": 200,
-    "text": "Linea de comando CLI",
+    "text": "Linea de comando CLI".blue,
   },
   {
     "file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md",
     "href": "https://carlosazvbnmaustre.es/",
-    "message": "fail",
-    "status": "Don't answer",
-    "text": "Asíncronía en js",
+    "message": "Fail".red,
+    "status": "Did't answer".red,
+    "text": "Asíncronía en js".blue,
   },
 ]
 describe('arrayLinks', () => {

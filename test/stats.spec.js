@@ -4,7 +4,7 @@ import {
   broken
 } from '../src/stats.js'
 
-import chalk from 'chalk';
+import colors from 'colors';
 
 const validateTrue =  [
     {
@@ -47,8 +47,8 @@ describe('arrayLinks', () => {
   it('totalLinks is a function', () => {
     expect(typeof totalLinks).toBe('function');
   });
-  it(`Should be ${chalk.red("TOTAL:5")}`, () => {
-    expect(totalLinks(validateTrue)).toBe(chalk.blue("TOTAL:5"));
+  it(`Should be ${colors.blue("TOTAL:5")}`, () => {
+    expect(totalLinks(validateTrue)).toBe(colors.blue("TOTAL:5"));
   });
 });
 
@@ -56,8 +56,8 @@ describe('unique', () => {
     it('unique is a function', () => {
       expect(typeof unique).toBe('function');
     });
-    it(`Should be ${chalk.red("UNIQUE:5")}`, () => {
-      expect(unique(validateTrue)).toBe(chalk.magenta("UNIQUE:5"));
+    it(`Should be ${colors.magenta("UNIQUE:5")}`, () => {
+      expect(unique(validateTrue)).toBe(colors.magenta("UNIQUE:5"));
     });
 });
  
@@ -65,7 +65,7 @@ describe('broken', () => {
     it('broken is a function', () => {
       expect(typeof broken).toBe('function');
     });
-    it(`Should be ${chalk.red("BROKEN: 2")}` , () => {
-      expect(broken(validateTrue)).toBe(chalk.red("BROKEN: 2"));
+    it(`Should be ${colors.red("BROKEN: 2")}` , () => {
+      expect(broken(validateTrue)).toBe(colors.red("BROKEN: 2"));
     });
 });

@@ -3,6 +3,7 @@ import path from 'path';
 import { marked } from 'marked';
 import { JSDOM }  from 'jsdom';
 import fetch from 'node-fetch';
+import colors from 'colors';
 
 
 // validar si la ruta existe
@@ -85,7 +86,7 @@ const getLinks = (arrFileContent) => {
         arrTagA.forEach((a) => {
             links.push({
                 href: a.href,
-                text: a.textContent.slice(0,50),
+                text: a.textContent.slice(0,50).blue,
                 file: fileRead.path
             })
         })
@@ -114,13 +115,14 @@ const linksStatus = (arrayLinks) => {
         const newArrFetch = fetch(contentLinks.href).then((response) => {
             if(response.status>=200 && response.status<400){
                 // console.log(Object.assign(contentLinks, {status:response.status , ok: 'ok'}))
-                return Object.assign(contentLinks, {status:response.status , message: 'ok'}) 
-            } else if (response.status>=400 && response.status<500){
+                return Object.assign(contentLinks, {status:response.status , message: 'OK'.green}) 
+            } 
+            else if (response.status>=400 && response.status<500){
                 // console.log(Object.assign(contentLinks, {status:response.status , ok: 'fail'}))
-                return Object.assign(contentLinks, {status:response.status , message: 'fail'})
+                return Object.assign(contentLinks, {status:response.status , message:'Fail'.red})
             }
         }).catch(() => {
-            return Object.assign(contentLinks, {status:`Don't answer` , message: 'fail'})
+            return Object.assign(contentLinks, {status:`Did't answer`.red , message:'Fail'.red})
         })
         return newArrFetch
         })
