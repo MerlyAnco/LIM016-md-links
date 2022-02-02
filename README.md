@@ -93,7 +93,12 @@ $ md-links
 <div><img src="https://raw.githubusercontent.com/MerlyAnco/LIM016-md-links/main/img/validate%20y%20stats.gif" > </div>
 
 ***
-## 5. Checklist
+
+## 5. Tests 📊
+
+![tests](https://user-images.githubusercontent.com/91748510/152252789-33f844eb-c0b0-4aa6-be6d-76d2d31ada49.PNG)
+
+## 6. Checklist
 
 ### General
 
