@@ -21,7 +21,7 @@ const validateTrue =  [
   {
     "file": "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md",
     "href": "https://developer.mozilla.org/",
-    "message": "OK".greem,
+    "message": "OK".green,
     "status": 200,
     "text": "Promesas".blue,
   },
@@ -51,7 +51,7 @@ describe('arrayLinks', () => {
   it('arrayLinks is a function', () => {
     expect(typeof arrayLinks).toBe('function');
   });
-  it('arrayLinks is ', () => {
+  it('arrayLinks should return an array of links ', () => {
     expect(arrayLinks('test/prueba-test')).resolves.toStrictEqual(prueba);
   });
 });
@@ -60,14 +60,14 @@ describe('mdLinks', () => {
   it('mdLinks is a function', () => {
     expect(typeof mdLinks).toBe('function');
   });
-  it('mdLinks is ', () => {
+  it('mdLinks should return a basic information ', () => {
     expect(mdLinks('test/prueba-test', {validate: false})).resolves.toStrictEqual(prueba);
     expect(mdLinks('test/prueba-test')).resolves.toStrictEqual(prueba);
   });
-  it('mdLinks is ', () => {
+  it('mdLinks should return validated links ', () => {
     expect(mdLinks('test/prueba-test', {validate: true})).resolves.toStrictEqual(validateTrue);
   });
-  it('mdLinks is ', () => {
+  it('should return error with an incorrect path', () => {
     expect(mdLinks('notPath', { validate: true })).resolves.toStrictEqual("La ruta ingresada no existe o no es valida");
   });
 });

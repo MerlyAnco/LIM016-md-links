@@ -1,4 +1,14 @@
 import {
+  jest
+} from '@jest/globals';
+
+jest.mock('node-fetch', () => ({
+  fetch: (content) => {
+    console.log(content);
+  }
+}))
+
+import {
     absolutePath,
     comprovePath,
     readDirectory,
@@ -67,7 +77,10 @@ describe('readDirectory', () => {
   it('readDirectory is a function', () => {
     expect(typeof readDirectory).toBe('function');
   });
-  it('readDirectory is a ', () => {
+  it('readDirectory should contain the files ', () => {
+    expect(readDirectory(ruta)).toStrictEqual(arrFiles);
+  });
+  it('readDirectory should contain the files ', () => {
     expect(readDirectory(ruta)).toStrictEqual(arrFiles);
   });
 });
@@ -76,7 +89,7 @@ describe('arrFilesMd', () => {
   it('arrFilesMd is a function', () => {
     expect(typeof arrFilesMd).toBe('function');
   });
-  it('arrFilesMd is a ', () => {
+  it('arrFilesMd should contain the .md files ', () => {
     expect(arrFilesMd(arrFiles)).toStrictEqual(arrFileMD);
   });
 });
@@ -85,10 +98,10 @@ describe('readArrFile', () => {
   it('readArrFile is a function', () => {
     expect(typeof readArrFile).toBe('function');
   });
-  it('should be ', () => {
+  it('should be a object of files', () => {
     expect(typeof readArrFile(arrFileMD)).toBe("object");
 });
-  it('should be ', () => {
+  it('should content the read files', () => {
     expect(readArrFile(arrFileMD)).toStrictEqual(contentFile);
   });
 });
@@ -98,7 +111,7 @@ describe('getLinks', () => {
   it('getLinks is a function', () => {
     expect(typeof getLinks).toBe('function');
   });
-  it('should be ', () => {
+  it('should contain an array of links ', () => {
     expect(getLinks(obj)).toStrictEqual([{"file": "test\\prueba-test\\carpeta-prueba2\\link2.md", "href": "https://developer.mozilla.org/es/docs/Web/HTTP/Overview", "text": "Generalidades del protocolo HTTP - MDN".blue}]);
 })
 });
@@ -108,8 +121,79 @@ describe('linksStatus', () => {
   it('linksStatus is a function', () => {
     expect(typeof linksStatus).toBe('function');
   });
-  it('linkStatus', () =>{
+  it('linkStatus should return link states', () =>{
     expect(linksStatus(arrLinks)).resolves.toStrictEqual([{"file": "test\\prueba-test\\carpeta-prueba2\\link2.md", "href": "https://developer.mozilla.org/es/docs/Web/HTTP/Overview", "message": "OK".green, "status": 200, "text": "Generalidades del protocolo HTTP - MDN".blue}, {"file": "test\\prueba-test\\carpeta-prueba2\\link2.md", "href": "https://developer.mozirtylla.org/es/docs/Web/HTTP/Overview", "message": "Fail".red, "status": "Did't answer".red, "text": "Generalidades del protocolo HTTP - MDN".blue}])
   })
+});
+
+describe('linksStatus  is a function', () => {
+  test("status: 200 - message: 'OK'", () => {
+    const recieveObject = [
+      {
+        file: "test\\prueba-test\\carpeta-prueba2\\link2.md", 
+        href: "https://developer.mozilla.org/es/docs/Web/HTTP/Overview", 
+        text: "Generalidades del protocolo HTTP - MDN".blue,
+      },
+    ];
+    const resultObject = [
+      {
+        file: "test\\prueba-test\\carpeta-prueba2\\link2.md", 
+        href: "https://developer.mozilla.org/es/docs/Web/HTTP/Overview", 
+        text: "Generalidades del protocolo HTTP - MDN".blue,
+        status: 200,
+        message: 'OK'.green
+      },
+    ];
+    return linksStatus(recieveObject)
+    .then((result) => {
+      expect(result).toEqual(resultObject);
+    })
+  });
+
+  test("status: 400 - message: 'Fail'", () => {
+    const recieveObject = [
+      {
+        file: "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md", 
+        href: "https://nodejs.org/api/pfdghath.html", 
+        text: "Path".blue,
+      },
+    ];
+    const resultObject = [
+      {
+        file: "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md",
+        href: "https://nodejs.org/api/pfdghath.html",
+        text: "Path".blue,
+        status: 404,
+        message: "Fail".red,
+      },
+    ];
+    return linksStatus(recieveObject)
+    .then((result) => {
+      expect(result).toEqual(resultObject);
+    })
+  });
+
+  test("status: `Did't answer` - message: 'Fail'", () => {
+    const recieveObject = [
+      {
+        file: "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md", 
+        href: "https://ndfodejs.org/api/pfdghath.html", 
+        text: "Path".blue,
+      },
+    ];
+    const resultObject = [
+      {
+        file: "C:\\Users\\N24\\Desktop\\proyecto 4\\LIM016-md-links\\test\\prueba-test\\links.md", 
+        href: "https://ndfodejs.org/api/pfdghath.html", 
+        text: "Path".blue,
+        status: "Did't answer".red,
+        message: "Fail".red,
+      },
+    ];
+    return linksStatus(recieveObject)
+    .then((result) => {
+      expect(result).toEqual(resultObject);
+    })
+  });
 });
 

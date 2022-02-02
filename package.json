@@ -1,5 +1,5 @@
 {
-  "name": "merly-anco-md-links",
+  "name": "md-links-merly",
   "version": "0.1.0",
   "description": "libreria que permite analizar el correcto funcionamiento de los archivos markdown",
   "main": "index.js",
@@ -41,7 +41,8 @@
     "jsdom": "^19.0.0",
     "marked": "^4.0.10",
     "node-fetch": "^3.1.0",
-    "table": "^6.8.0"
+    "table": "^6.8.0",
+    "user": "^0.0.0"
   },
   "bin": {
     "md-links": "./src/control-cli.js"

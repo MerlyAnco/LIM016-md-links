@@ -3,7 +3,7 @@ import path from 'path';
 import { marked } from 'marked';
 import { JSDOM }  from 'jsdom';
 import fetch from 'node-fetch';
-import colors from 'colors';
+
 
 
 // validar si la ruta existe
@@ -35,10 +35,7 @@ const readDirectory = (route) => {
     if(fs.lstatSync(route).isFile()){
         arrFiles.push(route)
     } else {
-        const arrFilesDirectory = fs.readdirSync(route,'utf-8', (err, files) => {
-            if (err) throw err;
-            throw files
-        })
+        const arrFilesDirectory = fs.readdirSync(route)
         arrFilesDirectory.forEach(file => {
             const pathRelative = path.join(route, file);
             arrFiles = arrFiles.concat(readDirectory(pathRelative))
